@@ -18,5 +18,5 @@ or download ZIP.
 ## Usage
 Play around with the values when creating a Pendulum object and see how it affects the behavior.
 
-- `python3 /path/single.py`
-- `python3 /path/many.py`
+`$ python3 /path/single.py`
+`$ python3 /path/many.py`
