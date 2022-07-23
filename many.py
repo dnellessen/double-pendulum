@@ -2,53 +2,11 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as clr
 from matplotlib.animation import FuncAnimation
 
-from math import sin, cos, pi
-
+from math import pi
 import numpy as np
 import threading
 
-
-class Pendulum:
-    def __init__(self, length1=1, length2=1, mass1=1, mass2=1, theta1=pi/2, theta2=pi/2):
-        '''https://web.mit.edu/jorloff/www/chaosTalk/double-pendulum/double-pendulum-en.html'''
-
-        self.l1, self.l2 = length1, length2
-        self.m1, self.m2 = mass1, mass2
-        self.theta1, self.theta2 = theta1, theta2
-
-        self.v1, self.v2 = 0, 0
-        self.g = 9.81
-        self.dt = 0.01
-        # time step (and interval) was optained by comparing the time per frame with a timer
-
-    def update_values(self):
-        '''
-        The first dirivitive of theta is the velocity.
-        The sencond dirivitive of theta is the acceleration.
-        '''
-
-        numerator1 = -self.g * (2*self.m1 + self.m2) * sin(self.theta1) - self.m2 * self.g * sin(self.theta1 - 2*self.theta2) - (2*sin(self.theta1 - self.theta2) * self.m2 * (self.v2**2 * self.l2 + self.v1**2 * self.l1 * cos(self.theta1 - self.theta2)))
-        numerator2 = 2*sin(self.theta1 - self.theta2) * (self.v1**2 * self.l1 * (self.m1 + self.m2) + self.g * (self.m1 + self.m2) * cos(self.theta1) + self.v2**2 * self.l2 * self.m2 * cos(self.theta1 - self.theta2))
-        denominator = (2*self.m1 + self.m2 - self.m2 * cos(2*self.theta1 - 2*self.theta2))
-
-        a1 = numerator1 / (self.l1 * denominator)
-        a2 = numerator2 / (self.l2 * denominator)
-
-        self.v1 += self.dt * a1
-        self.v2 += self.dt * a2
-        self.theta1 += self.dt * self.v1
-        self.theta2 += self.dt * self.v2
-
-    def coordinates(self):
-        ''' Returns new coordinates for x1, y1 and x2, y2. '''
-
-        x1 = self.l1 * sin(self.theta1)
-        y1 = -self.l1 * cos(self.theta1)
-
-        x2 = x1 + self.l2 * sin(self.theta2)
-        y2 = y1 - self.l2 * cos(self.theta2)
-
-        return (x1, y1), (x2, y2)
+from pendulum import Pendulum
 
 
 class Animation:
